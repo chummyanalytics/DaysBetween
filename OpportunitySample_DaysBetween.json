@@ -1,0 +1,85 @@
+{
+  "Extract_Opportunity": {
+    "action": "sfdcDigest",
+    "parameters": {
+      "SFDCtoken": "SFDCtoken",
+      "maxAllowedOffset": 1500,
+      "fields": [
+        {
+          "name": "Id"
+        },
+        {
+          "name": "AccountId"
+        },
+        {
+          "name": "OwnerId"
+        },
+        {
+          "name": "Name"
+        },
+        {
+          "name": "StageName"
+        },
+        {
+          "name": "LeadSource"
+        },
+        {
+          "name": "IsWon"
+        },
+        {
+          "name": "Type"
+        },
+        {
+          "name": "IsClosed"
+        },
+        {
+          "name": "ForecastCategory"
+        },
+        {
+          "name": "ForecastCategoryName"
+        },
+        {
+          "name": "CreatedDate"
+        },
+        {
+          "name": "CloseDate"
+        },
+        {
+          "name": "Amount"
+        },
+        {
+          "name": "CreatedById"
+        }
+      ],
+      "concurrentBatches": 12,
+      "object": "Opportunity"
+    }
+  },
+  "compute_Opportunity": {
+    "action": "computeExpression",
+    "parameters": {
+      "source": "Extract_Opportunity",
+      "mergeWithSource": true,
+      "computedFields": [
+        {
+          "precision": 2,
+          "name": "Days_Between_Opp_Create_and_Close",
+          "saqlExpression": "daysBetween(toDate('CloseDate_sec_epoch'),toDate('CreatedDate_sec_epoch'))",
+          "scale": 0,
+          "label": "Days_Between_Opp_Create_and_Close",
+          "type": "Numeric"
+        }
+      ]
+    }
+  },
+  "Register_Opportunity": {
+    "action": "sfdcRegister",
+    "parameters": {
+      "SFDCtoken": "SFDCtoken",
+      "rowLevelSecurityFilter": "",
+      "name": "Opportunities",
+      "alias": "opportunities",
+      "source": "compute_Opportunity"
+    }
+  }
+}

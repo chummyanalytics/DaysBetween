@@ -1,0 +1,65 @@
+{
+    "name": "Days_Between_Sample_textstring",
+    "label": "Days Between Sample textstring",
+    "visualizationType": "comparisontable",
+    "state": {
+        "steps": {
+            "saql": {
+                "type": "saql",
+                "selectMode": "none",
+                "broadcastFacet": false,
+                "receiveFacet": false,
+                "groups": [],
+                "numbers": [],
+                "strings": [],
+                "useGlobal": true,
+                "query": "q = load \"opportunities\";\nq = foreach q generate 'Name', 'CreatedDate', 'CloseDate', daysBetween(toDate('CloseDate_sec_epoch'),toDate('CreatedDate_sec_epoch')) as 'Days Between Opp Create and Close';"
+            }
+        },
+        "widgets": {
+            "saql_table": {
+                "type": "table",
+                "parameters": {
+                    "step": "saql",
+                    "customBulkActions": [],
+                    "showActionMenu": true,
+                    "mode": "variable",
+                    "borderWidth": 1,
+                    "borderColor": "#e0e5ee",
+                    "innerMinorBorderColor": "#e0e5ee",
+                    "innerMajorBorderColor": "#a8b7c7",
+                    "verticalPadding": 8,
+                    "numberOfLines": 1,
+                    "header": {
+                        "backgroundColor": "#f4f6f9",
+                        "fontColor": "#16325c",
+                        "fontSize": 12
+                    },
+                    "cell": {
+                        "backgroundColor": "#ffffff",
+                        "fontColor": "#16325c",
+                        "fontSize": 12
+                    },
+                    "columnProperties": {},
+                    "minColumnWidth": 40,
+                    "maxColumnWidth": 300,
+                    "columns": [
+                        "Days Between Opp Create and Close",
+                        "Name",
+                        "CreatedDate",
+                        "CloseDate"
+                    ],
+                    "showRowIndexColumn": false
+                }
+            }
+        }
+    },
+    "datasets": [
+        {
+            "id": "0Fb3k000000L3zFCAS",
+            "name": "opportunities",
+            "label": "Opportunities",
+            "url": "/services/data/v47.0/wave/datasets/0Fb3k000000L3zFCAS"
+        }
+    ]
+}
